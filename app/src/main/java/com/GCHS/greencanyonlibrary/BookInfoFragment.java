@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -57,9 +58,11 @@ public class BookInfoFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_book_info, container, false);
         if(mParam1 != null) {
 
-            ImageView cover = rootView.findViewById(R.id.coverView2);
-            //TextView title = (TextView)rootView.findViewById(R.id.titleView);
-            TextView author = rootView.findViewById(R.id.authorView);
+            ImageView cover = rootView.findViewById(R.id.coverViewInfo);
+            TextView title = (TextView)rootView.findViewById(R.id.titleViewInfo);
+            TextView author = (TextView)rootView.findViewById(R.id.authorViewInfo);
+            Button checkOutHoldButton = (Button)rootView.findViewById(R.id.checkOutButton);
+            TextView decription = (TextView)rootView.findViewById(R.id.descriptionViewInfo);
 
             Picasso.with(this.getContext()).load(mParam1.getImageURL()).into(cover, new Callback() {
                 @Override
@@ -72,8 +75,25 @@ public class BookInfoFragment extends Fragment {
 
                 }
             });
+            title.setText(mParam1.getTitle());
+            author.setText(mParam1.getAuthor());
+            if(mParam1.isCheckedOut()) {
+                checkOutHoldButton.setText("Hold");
+                checkOutHoldButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
 
-            //title.setText(mParam1.getTitle());
+                    }
+                });
+            }
+            else{
+                checkOutHoldButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
+            }
 
             mListener.onFragmentInteraction(mParam1.getTitle());
         }

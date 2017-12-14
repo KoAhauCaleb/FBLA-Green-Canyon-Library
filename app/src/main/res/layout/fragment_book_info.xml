@@ -7,22 +7,51 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/coverView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/cheched_out_banner" />
-
-    </RelativeLayout>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/coverViewInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:src="@color/zxing_transparent" />
+
+            <TextView
+                android:id="@+id/titleViewInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/coverViewInfo"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:id="@+id/authorViewInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/titleViewInfo"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:id="@+id/descriptionViewInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/button"
+                android:layout_centerHorizontal="true" />
+
+            <Button
+                android:id="@+id/checkOutButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/authorViewInfo"
+                android:layout_centerHorizontal="true"
+                android:text="Check Out" />
+
+        </RelativeLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>
