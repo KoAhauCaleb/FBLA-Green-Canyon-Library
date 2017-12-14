@@ -1,10 +1,6 @@
 package com.GCHS.greencanyonlibrary;
 
-import com.amazonaws.mobileconnectors.lambdainvoker.*;
-import com.amazonaws.auth.CognitoCachingCredentialsProvider;
-import com.amazonaws.regions.Regions;
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -12,14 +8,10 @@ import android.os.Build;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.View;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,18 +19,22 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+interface LoginCallback{
+    void userResult(UserInfo user);
+}
+
 public class MainActivity extends AppCompatActivity implements LoginCallback{
+    private final String prefs = "Prefs";
     private String codeContent;
     private TextView EnterID;
     private ProgressBar LoggingIn;
-    UsersSQLmanager userManager = new UsersSQLmanager(this);
+    private UsersSQLmanager userManager = new UsersSQLmanager(this);
+    private View v = null;
+    private SharedPreferences sp;
 
-    private final String prefs = "Prefs";
-    SharedPreferences sp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sp = getSharedPreferences(prefs, Context.MODE_PRIVATE);
-        SharedPreferences.Editor edit = sp.edit();
 
         boolean li = sp.getBoolean("logged_in", false);
 
@@ -93,7 +89,6 @@ public class MainActivity extends AppCompatActivity implements LoginCallback{
         integrator.initiateScan();
     }
 
-    View v = null;
 
     public void loginNow(View view){
 
@@ -144,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements LoginCallback{
 
         SharedPreferences.Editor editor = sp.edit();
 
-        try{
+        try {
             Toast toast = Toast.makeText(getApplicationContext(),"Hello " + user.getFirstName(), Toast.LENGTH_LONG);
             toast.show();
             editor.putBoolean("logged_in", true);
@@ -154,13 +149,9 @@ public class MainActivity extends AppCompatActivity implements LoginCallback{
             editor.putBoolean("teach", user.getTeacher());
             editor.commit();
             start();
-        }catch(Exception e){
+        }catch(Exception e) {
             Snackbar.make(v, "Somthing went wrong", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }
     }
-}
-
-interface LoginCallback{
-    void userResult(UserInfo user);
 }

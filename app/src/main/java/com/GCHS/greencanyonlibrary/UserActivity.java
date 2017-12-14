@@ -31,42 +31,36 @@ public class UserActivity extends AppCompatActivity
     private final String prefs = "Prefs";
     private SharedPreferences sp;
 
-    private int fragsSwitched = 0;
-
-    public void updateFragsSwitched(){
-        fragsSwitched += 1;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sp = getSharedPreferences(prefs, Context.MODE_PRIVATE);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.mainFrame, new SearchFragment()).addToBackStack("fragBack");
         ft.commit();
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View hView = navigationView.getHeaderView(0);
-        TextView nav_user = (TextView)hView.findViewById(R.id.users_name);
+        TextView nav_user = hView.findViewById(R.id.users_name);
         nav_user.setText(sp.getString("fn", null) + " " + sp.getString("ln", null));
         hView.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -103,25 +97,21 @@ public class UserActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_search) {
-            updateFragsSwitched();
             getFragmentManager().popBackStack();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.mainFrame, new SearchFragment()).addToBackStack("fragBack");
             ft.commit();
         } else if (id == R.id.nav_due_dates) {
-            updateFragsSwitched();
             getFragmentManager().popBackStack();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.mainFrame, new DueDatesFragment()).addToBackStack("fragBack");
             ft.commit();
         } else if (id == R.id.nav_holds) {
-            updateFragsSwitched();
             getFragmentManager().popBackStack();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.mainFrame, new HoldsFragment()).addToBackStack("fragBack");
             ft.commit();
         } else if (id == R.id.nav_library_map) {
-            updateFragsSwitched();
             getFragmentManager().popBackStack();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.mainFrame, new LibraryMapFragment()).addToBackStack("fragBack");
@@ -132,7 +122,7 @@ public class UserActivity extends AppCompatActivity
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

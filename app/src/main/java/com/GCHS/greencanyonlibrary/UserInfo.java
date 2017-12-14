@@ -5,9 +5,9 @@ package com.GCHS.greencanyonlibrary;
  */
 
 public class UserInfo {
+    boolean teacher;
     private String firstName;
     private String lastName;
-    boolean teacher;
 
     public UserInfo(){
 
@@ -29,16 +29,8 @@ public class UserInfo {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public boolean getTeacher() {

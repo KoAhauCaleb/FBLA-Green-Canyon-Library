@@ -2,10 +2,7 @@ package com.GCHS.greencanyonlibrary;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.AsyncTask;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,18 +11,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
-
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-
-/**
- * Created by User on 12/8/2017.
- */
 
 public class BookAdapter extends ArrayAdapter<Book>{
     Context context;
@@ -43,13 +33,11 @@ public class BookAdapter extends ArrayAdapter<Book>{
         LayoutInflater inflater = LayoutInflater.from(context);
         view = inflater.inflate(R.layout.book_item, parent,false);
 
-
-
-        bookCell.cover = (ImageView)view.findViewById(R.id.coverView);
-        bookCell.title = (TextView)view.findViewById(R.id.titleView);
-        bookCell.loading = (ProgressBar)view.findViewById(R.id.imageLoadingBar);
-        bookCell.author = (TextView)view.findViewById(R.id.authorView);
-        bookCell.checkedOut = (ImageView)view.findViewById(R.id.checkedOutView);
+        bookCell.cover = view.findViewById(R.id.coverView);
+        bookCell.title = view.findViewById(R.id.titleView);
+        bookCell.loading = view.findViewById(R.id.imageLoadingBar);
+        bookCell.author = view.findViewById(R.id.authorView);
+        bookCell.checkedOut = view.findViewById(R.id.checkedOutView);
 
         Book b = getItem(position);
 
@@ -77,9 +65,7 @@ public class BookAdapter extends ArrayAdapter<Book>{
 
                 source.recycle();
 
-                Bitmap rbm = Bitmap.createBitmap(bm, 0,0,180, 270);
-
-                return rbm;
+                return Bitmap.createBitmap(bm, 0,0,180, 270);
             }
 
             @Override
@@ -93,7 +79,6 @@ public class BookAdapter extends ArrayAdapter<Book>{
             Bitmap bmp = ((BitmapDrawable) context.getResources().getDrawable(R.drawable.cheched_out_banner)).getBitmap();
             bookCell.checkedOut.setImageBitmap(bmp);
         }
-
         return view;
     }
 

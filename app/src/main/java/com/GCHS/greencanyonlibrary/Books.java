@@ -18,17 +18,14 @@ public class Books {
 
     private ArrayList<Book> booksArrayList = new ArrayList<Book>();
 
-    public Books (String booksJSON)
-    {
+    public Books (String booksJSON) {
         JsonObject bookJ;
-        try
-        {
+        try {
             bookJ = new Gson().fromJson(booksJSON, JsonObject.class);
 
             JsonArray booksArray = bookJ.getAsJsonArray("books");
             int amtBooks = booksArray.size();
-            for (int i = 0; i < amtBooks; i++)
-            {
+            for (int i = 0; i < amtBooks; i++){
                 String iURL = booksArray.get(i).getAsJsonObject().get("imageurl").getAsString();
                 String title = booksArray.get(i).getAsJsonObject().get("title").getAsString();
                 int checkedout = booksArray.get(i).getAsJsonObject().get("checkedout").getAsInt();
@@ -36,23 +33,19 @@ public class Books {
                 booksArrayList.add(new Book(iURL, title, author, checkedout));
                 Log.e(booksArrayList.get(i).getTitle(), "Books");
             }
-        }catch(Exception e)
-        {
+        }catch(Exception e) {
             Log.e(e.getMessage(), "Books");
         }
     }
 
-    public ArrayList<Book> getBooksArrayList ()
-    {
+    public ArrayList<Book> getBooksArrayList () {
         return booksArrayList;
     }
 
-    public ArrayList<Book> search(String searchquery, int typeofsearch)
-    {
+    public ArrayList<Book> search(String searchquery, int typeofsearch) {
         ArrayList<Book> searchResults = new ArrayList<Book>();
 
-        for (int i = 0; i < booksArrayList.size(); i++)
-        {
+        for (int i = 0; i < booksArrayList.size(); i++) {
             Book current = booksArrayList.get(i);
             String author = current.getAuthor();
             String title = current.getTitle();

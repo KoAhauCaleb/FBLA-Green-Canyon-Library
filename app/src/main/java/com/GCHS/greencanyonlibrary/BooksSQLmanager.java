@@ -10,12 +10,20 @@ import com.amazonaws.mobileconnectors.lambdainvoker.LambdaFunctionException;
 import com.amazonaws.mobileconnectors.lambdainvoker.LambdaInvokerFactory;
 import com.amazonaws.regions.Regions;
 
+interface GetBooksResponse {
+    void postResult(String result);
+}
+
+interface RDSGetBooks {
+    @LambdaFunction
+    String RDSgetBooks();
+}
+
 /**
  * Created by User on 12/8/2017.
  */
 
 public class BooksSQLmanager implements GetBooksResponse{
-    private String result;
 
     private BookCallback call;
 
@@ -25,7 +33,6 @@ public class BooksSQLmanager implements GetBooksResponse{
 
     void getBooks(Context applicationContext){
         GetBooksJSON getBooksAsync = new GetBooksJSON(applicationContext);
-        String result = null;
 
         getBooksAsync.delegate = this;
 
@@ -40,20 +47,15 @@ public class BooksSQLmanager implements GetBooksResponse{
     }
 
     @Override
-    public void postResult(String asyncresult) {
-        call.asyncResult(asyncresult);
-    }
-
-    public String getResult() {
-        return result;
+    public void postResult(String result) {
+        call.asyncResult(result);
     }
 }
 
 class GetBooksJSON extends AsyncTask<String, Void, String> {
 
-    Context applicationContext;
-
     public GetBooksResponse delegate = null;
+    Context applicationContext;
 
     public GetBooksJSON(Context applicationcontext){
         applicationContext = applicationcontext;
@@ -81,13 +83,4 @@ class GetBooksJSON extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String s) {
         delegate.postResult(s);
     }
-}
-
-interface GetBooksResponse {
-    void postResult(String asyncresult);
-}
-
-interface RDSGetBooks {
-    @LambdaFunction
-    String RDSgetBooks();
 }

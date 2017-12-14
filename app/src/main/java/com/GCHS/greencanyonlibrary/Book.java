@@ -9,29 +9,6 @@ import android.os.Parcelable;
 
 public class Book implements Parcelable {
 
-    private String imageURL;
-    private String title;
-    private String author;
-    private boolean checkedOut;
-
-    public Book(String iURL, String i, String t, int checkedout)
-    {
-        imageURL = iURL;
-        title = i;
-        author = t;
-        checkedOut = false;
-        if(checkedout == 1){
-            checkedOut = true;
-        }
-    }
-
-    protected Book(Parcel in) {
-        imageURL = in.readString();
-        title = in.readString();
-        author = in.readString();
-        checkedOut = in.readByte() != 0;
-    }
-
     public static final Creator<Book> CREATOR = new Creator<Book>() {
         @Override
         public Book createFromParcel(Parcel in) {
@@ -43,6 +20,25 @@ public class Book implements Parcelable {
             return new Book[size];
         }
     };
+    private String imageURL;
+    private String title;
+    private String author;
+    private boolean checkedOut;
+
+    public Book(String iURL, String t, String a, int co)
+    {
+        imageURL = iURL;
+        title = t;
+        author = a;
+        checkedOut = co == 1;
+    }
+
+    protected Book(Parcel in) {
+        imageURL = in.readString();
+        title = in.readString();
+        author = in.readString();
+        checkedOut = in.readByte() != 0;
+    }
 
     public String getImageURL() {
         return imageURL;

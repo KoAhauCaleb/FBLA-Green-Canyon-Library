@@ -1,5 +1,6 @@
 package com.GCHS.greencanyonlibrary;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -11,6 +12,15 @@ import com.amazonaws.mobileconnectors.lambdainvoker.LambdaInvokerFactory;
 import com.amazonaws.regions.Regions;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+
+interface GetUserResponse {
+    void postResult(String result);
+}
+
+interface AppRDS {
+    @LambdaFunction
+    String appRDS(String request);
+}
 
 /**
  * Created by User on 11/11/2017.
@@ -26,7 +36,6 @@ public class UsersSQLmanager implements GetUserResponse{
 
     void Login(final String ID, Context applicationContext){
         GetUserJSON att = new GetUserJSON(applicationContext);
-        String result = null;
 
         att.delegate = this;
 
@@ -63,13 +72,12 @@ public class UsersSQLmanager implements GetUserResponse{
 
 class GetUserJSON extends AsyncTask<String, Void, String> {
 
-    Context applicationContext;
+    GetUserResponse delegate = null;
+    private Context applicationContext;
 
-    public GetUserJSON(Context applicationcontext){
-        applicationContext = applicationcontext;
+    GetUserJSON(Context context){
+        applicationContext = context;
     }
-
-    public GetUserResponse delegate = null;
 
     @Override
     protected String doInBackground(String... strings) {
@@ -99,13 +107,4 @@ class GetUserJSON extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String result) {
         delegate.postResult(result);
     }
-}
-
-interface GetUserResponse {
-    void postResult(String asyncresult);
-}
-
-interface AppRDS {
-    @LambdaFunction
-    String appRDS(String request);
 }
