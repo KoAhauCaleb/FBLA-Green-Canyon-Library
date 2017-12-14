@@ -1,0 +1,85 @@
+Index: app/src/main/java/com/GCHS/greencanyonlibrary/UsersSQLmanager.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/GCHS/greencanyonlibrary/UsersSQLmanager.java	(revision )
++++ app/src/main/java/com/GCHS/greencanyonlibrary/UsersSQLmanager.java	(revision )
+@@ -19,31 +19,24 @@
+ 
+ public class UsersSQLmanager{
+ 
++    UserInfo user;
++
+     public UsersSQLmanager(){}
+ 
+-    UserInfo Login(final String ID, Context applicationContext, MainActivity.Callback callback){
++    void Login(final String ID, Context applicationContext, MainActivity.Callback callback){
+         GetUserJSON att = new GetUserJSON(applicationContext);
+-        UserInfo user;
++
+         String result = null;
+ 
+-        try {
+-            result = att.execute(ID).get();//Run on new thread because android requires this for network calls,
++        att.execute(ID);//Run on new thread because android requires this for network calls,
+                                            // wait for result and store in result
+-        }catch (Exception e){
+-            Log.e(e.getMessage(), "UsersSQLmanager - Line 32");
+-            return null; //return null if failed
+-        }
+ 
+-        if (result == null) {
+-            return null; //return null if no result received
+-        }
+ 
+         JsonObject userJson;
+         try {
+             userJson = new Gson().fromJson(result, JsonObject.class);
+         }catch(Exception e){
+             Log.e(e.getMessage(), "UsersSQLmanager - Line 44");
+-            return null; //return null if failed
+         }
+         boolean teach = false;
+         if(userJson.get("teacher").getAsInt() == 1){
+@@ -53,9 +46,10 @@
+             user = new UserInfo(userJson.get("firstname").getAsString(), userJson.get("lastname").getAsString(), teach);
+         }catch(Exception e){
+             Log.e(e.getMessage(), "UsersSQLmanager - Line 54");
+-            return null; //return null if failed
+         }
++    }
+ 
++    public UserInfo getResult() {
+         return user;
+     }
+ }
+@@ -91,8 +85,27 @@
+             return null;
+         }
+     }
+-}
++
++    @Override
++    protected void onPostExecute(String result) {
++        JsonObject userJson;
++        try {
++            userJson = new Gson().fromJson(result, JsonObject.class);
++        }catch(Exception e){
++            Log.e(e.getMessage(), "UsersSQLmanager - Line 44");
++        }
++        boolean teach = false;
+ 
++        try {
++            if(userJson.get("teacher").getAsInt() == 1){
++                teach = true;
++            }
++            user = new UserInfo(userJson.get("firstname").getAsString(), userJson.get("lastname").getAsString(), teach);
++        }catch(Exception e){
++            Log.e(e.getMessage(), "UsersSQLmanager - Line 54");
++        }
++    }
++}
+ 
+ interface AppRDS {
+     @LambdaFunction

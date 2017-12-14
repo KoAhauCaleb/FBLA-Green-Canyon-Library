@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.GCHS.greencanyonlibrary.MainActivity"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/loginProgress"
+            style="@android:style/Widget.DeviceDefault.Light.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:max="@android:integer/config_shortAnimTime"
+            android:progress="@android:integer/config_longAnimTime"
+            android:progressTint="@color/colorPrimary"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/EnterID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="ID"
+            android:ems="10"
+            android:hint="ID"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/LoginPrompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/EnterID"
+            android:layout_centerHorizontal="true"
+            android:text="Enter Library ID:"
+            android:textAppearance="@android:style/TextAppearance.Material.Large" />
+
+        <Button
+            android:id="@+id/Scan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/EnterID"
+            android:layout_alignStart="@+id/EnterID"
+            android:layout_below="@+id/EnterID"
+            android:onClick="scanNow"
+            android:text="Scan" />
+
+        <Button
+            android:id="@+id/Login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/EnterID"
+            android:layout_alignRight="@+id/EnterID"
+            android:layout_below="@+id/EnterID"
+            android:onClick="loginNow"
+            android:text="Login" />
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>
