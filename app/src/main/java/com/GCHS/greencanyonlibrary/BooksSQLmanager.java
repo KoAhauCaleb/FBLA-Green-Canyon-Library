@@ -37,12 +37,11 @@ public class BooksSQLmanager implements GetBooksResponse{
         getBooksAsync.delegate = this;
 
         try {
-            getBooksAsync.execute();//Run on new thread because android requires this for network calls,
-            // wait for result and store in result
+            //Run on new thread because android requires this for network calls.
+            getBooksAsync.execute();
         }catch (Exception e){
             Log.e(e.getMessage(), "BooksSQLmanager");
             e.printStackTrace();
-            //return null if failed
         }
     }
 
