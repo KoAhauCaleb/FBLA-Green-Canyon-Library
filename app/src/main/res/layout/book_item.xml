@@ -5,9 +5,9 @@
 
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="180px"
-        android:layout_height="270px"
-        android:id="@+id/relativeLayout">
+        android:layout_height="270px">
 
         <ImageView
             android:id="@+id/coverView"
@@ -42,7 +42,6 @@
         android:layout_toEndOf="@+id/relativeLayout"
         android:ellipsize="end"
         android:maxLines="2"
-        android:text="sample"
         android:textAppearance="@android:style/TextAppearance.Material.Widget.ActionBar.Title" />
 
     <TextView
@@ -51,5 +50,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:text="TextView" />
+        android:ellipsize="end"
+        android:maxLines="1" />
+
+    <TextView
+        android:id="@+id/descriptionView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/titleView"
+        android:layout_toEndOf="@+id/relativeLayout" />
 </RelativeLayout>

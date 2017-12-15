@@ -19,7 +19,7 @@ public class BookInfoFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
 
     // TODO: Rename and change types of parameters
-    private Book mParam1;
+    private Book selectedBook;
 
     private OnFragmentInteractionListener mListener;
 
@@ -47,7 +47,7 @@ public class BookInfoFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getParcelable(ARG_PARAM1);
+            selectedBook = getArguments().getParcelable(ARG_PARAM1);
         }
     }
 
@@ -56,7 +56,7 @@ public class BookInfoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_book_info, container, false);
-        if(mParam1 != null) {
+        if(selectedBook != null) {
 
             ImageView cover = rootView.findViewById(R.id.coverViewInfo);
             TextView title = (TextView)rootView.findViewById(R.id.titleViewInfo);
@@ -64,7 +64,7 @@ public class BookInfoFragment extends Fragment {
             Button checkOutHoldButton = (Button)rootView.findViewById(R.id.checkOutButton);
             TextView decription = (TextView)rootView.findViewById(R.id.descriptionViewInfo);
 
-            Picasso.with(this.getContext()).load(mParam1.getImageURL()).into(cover, new Callback() {
+            Picasso.with(this.getContext()).load(selectedBook.getImageURL()).into(cover, new Callback() {
                 @Override
                 public void onSuccess() {
 
@@ -75,9 +75,9 @@ public class BookInfoFragment extends Fragment {
 
                 }
             });
-            title.setText(mParam1.getTitle());
-            author.setText(mParam1.getAuthor());
-            if(mParam1.isCheckedOut()) {
+            title.setText(selectedBook.getTitle());
+            author.setText(selectedBook.getAuthor());
+            if(selectedBook.isCheckedOut()) {
                 checkOutHoldButton.setText("Hold");
                 checkOutHoldButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -95,7 +95,7 @@ public class BookInfoFragment extends Fragment {
                 });
             }
 
-            mListener.onFragmentInteraction(mParam1.getTitle());
+            mListener.onFragmentInteraction(selectedBook.getTitle());
         }
         return rootView;
     }
@@ -114,7 +114,7 @@ public class BookInfoFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        mListener.onFragmentInteraction(mParam1.getTitle());
+        mListener.onFragmentInteraction(selectedBook.getTitle());
     }
 
     @Override
